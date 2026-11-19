@@ -1,0 +1,122 @@
+[
+  {
+    "ja_share": 1.0,
+    "acc": 0.5,
+    "acc_ci": [
+      0.4,
+      0.6
+    ],
+    "auc": 0.54,
+    "auc_ci": [
+      0.423,
+      0.653
+    ],
+    "swedish_loss": 3.1428,
+    "condition": "unchanged"
+  },
+  {
+    "ja_share": 1.0,
+    "acc": 0.5,
+    "acc_ci": [
+      0.4,
+      0.6
+    ],
+    "auc": 0.536,
+    "auc_ci": [
+      0.418,
+      0.65
+    ],
+    "swedish_loss": 3.1428,
+    "condition": "targeted lam=0.25"
+  },
+  {
+    "ja_share": 1.0,
+    "acc": 0.5,
+    "acc_ci": [
+      0.4,
+      0.6
+    ],
+    "auc": 0.536,
+    "auc_ci": [
+      0.416,
+      0.651
+    ],
+    "swedish_loss": 3.1428,
+    "condition": "targeted lam=0.5"
+  },
+  {
+    "ja_share": 0.94,
+    "acc": 0.54,
+    "acc_ci": [
+      0.44,
+      0.64
+    ],
+    "auc": 0.533,
+    "auc_ci": [
+      0.413,
+      0.648
+    ],
+    "swedish_loss": 3.1428,
+    "condition": "targeted lam=0.75"
+  },
+  {
+    "ja_share": 0.58,
+    "acc": 0.5,
+    "acc_ci": [
+      0.4,
+      0.6
+    ],
+    "auc": 0.533,
+    "auc_ci": [
+      0.414,
+      0.647
+    ],
+    "swedish_loss": 3.1427,
+    "condition": "targeted lam=1.0"
+  },
+  {
+    "ja_share": 1.0,
+    "acc": 0.5,
+    "acc_ci": [
+      0.4,
+      0.6
+    ],
+    "auc": 0.537,
+    "auc_ci": [
+      0.42,
+      0.651
+    ],
+    "swedish_loss": 3.1428,
+    "condition": "random seed=0 lam=1.0"
+  },
+  {
+    "ja_share": 1.0,
+    "acc": 0.5,
+    "acc_ci": [
+      0.4,
+      0.6
+    ],
+    "auc": 0.539,
+    "auc_ci": [
+      0.423,
+      0.652
+    ],
+    "swedish_loss": 3.1428,
+    "condition": "random seed=1 lam=1.0"
+  },
+  {
+    "ja_share": 1.0,
+    "acc": 0.5,
+    "acc_ci": [
+      0.4,
+      0.6
+    ],
+    "auc": 0.542,
+    "auc_ci": [
+      0.423,
+      0.654
+    ],
+    "swedish_loss": 3.1428,
+    "condition": "random seed=2 lam=1.0"
+  }
+]
