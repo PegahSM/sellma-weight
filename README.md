@@ -21,6 +21,7 @@ src/score.py         valid-answer rate, ja share, accuracy (bootstrap CIs)
 src/auc.py           AUC of the ja-minus-nej score (bootstrap CI)
 src/loss.py          Swedish language-modeling loss on the `correct` sentences
 src/edit.py          the targeted edit, random-edit control, evaluation
+src/alternatives.py  prompt changes, logit bias, fine-tuning of the same two rows
 src/facts_pilot.py   exploratory pilot: open-ended Swedish questions (not part of the final design)
 results/             subsets, per-example replies, summaries, edit results
 ```
@@ -65,6 +66,10 @@ python src/edit.py --split val
 
 # 4. final run on test (once): strength fixed at 1.0, five random seeds
 python src/edit.py --split test --lams 1.0 --seeds 5
+
+# 5. alternatives (prompt changes, logit bias, fine-tuning); val first, then test once
+python src/alternatives.py --split val
+python src/alternatives.py --split test
 
 # optional: open-ended Swedish facts pilot
 pip install langdetect
@@ -112,6 +117,17 @@ Lambda 1.0, the value that brings the "ja" share closest to 0.5, was fixed befor
 
 Output: `results/edit_test.json`.
 
+### Alternatives on `test` (n = 100; `src/alternatives.py`)
+
+| Condition | "ja" share | Accuracy | AUC | Swedish loss |
+|---|---|---|---|---|
+| Prompt: option order swapped | 0.96 | 0.54 (0.44-0.64) | 0.441 (0.322-0.552) | 3.1359 |
+| Prompt: different wording | 1.00 | 0.50 (0.40-0.60) | 0.464 (0.344-0.574) | 3.1359 |
+| Logit bias (subtract val mean score) | 0.61 | 0.45 (0.35-0.55) | 0.414 (0.305-0.529) | 3.1359 |
+| Fine-tune of the 2 rows on val labels | 0.85 | 0.49 (0.39-0.59) | 0.513 (0.394-0.632) | 3.1408 |
+
+Prompt and logit-bias rows change no weights, so their loss equals the unchanged model's. On `val` the logit bias gives a "ja" share of 0.53; fine-tuning reaches accuracy 0.76 and AUC 0.936 on `val`, which is its training data (overfitting, not a result). Output: `results/alternatives_val.json`, `results/alternatives_test.json`.
+
 ### Open-ended Swedish facts pilot (50 questions, 64 new tokens)
 
 | Model | not Swedish | repetitive | hit token limit | gold answer in well-formed replies |
@@ -126,6 +142,7 @@ Failures are rare and accuracy is at the floor, so this setup could not test the
 - The targeted edit reduces the "ja" bias (100% to 67% on `test`); random edits of the same size do not change it at all.
 - Accuracy does not improve (0.43 versus 0.50; intervals overlap, so not a significant change). The model's AUC is near 0.5 (0.54 on `val`, 0.41 on `test`, both intervals include 0.5), so balancing the answers only redistributes errors: failure removal without added capability.
 - AUC and Swedish loss are unchanged by the edit.
+- Prompt changes do not remove the bias (share 0.96-1.00). A logit bias gives a similar result to the edit (0.61 versus 0.67) with identical AUC, so for this bias the weight edit has no advantage over simple calibration. Fine-tuning the two rows overfits val and does not generalize (test accuracy 0.49).
 
 ## Limitations
 
@@ -133,5 +150,5 @@ Failures are rare and accuracy is at the floor, so this setup could not test the
 - "ja" share, accuracy and AUC in `src/edit.py` use the sign of the ja-minus-nej score, not generated replies.
 - The edit is close to a calibration implemented in the weights.
 - The loss check is weak evidence of no regression: only two embedding rows change and the test sentences rarely contain "ja" or "nej". Nothing outside Swedish was checked.
-- The edit strength was chosen by feedback on `val`; no LLM proposed or wrote the edit. This tests whether a targeted edit works, not the article's claim that an LLM can program weights by reasoning.
-- Single model, single task; ScaLA's corruptions are automatic and simple; 1B model revisions were not pinned.
+- The edit strength was chosen by feedback on `val`. The edit was suggested and coded by an AI assistant (Claude Sonnet 5.5) and applied as a fixed script; an LLM did not read or write the weights itself or iterate on forward-pass feedback, so this does not test LLM-driven weight programming.
+- Single model, single task; ScaLA's corruptions are automatic and simple; the fine-tuning baseline was lightly configured; 1B model revisions were not pinned.
