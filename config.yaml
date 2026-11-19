@@ -1,0 +1,15 @@
+model:
+  id: google/gemma-3-270m-it
+  revision: ac82b4e820549b854eebf28ce6dedaf9fdfa17b3
+
+seed: 42
+max_new_tokens: 20
+data:
+  dataset_id: mteb/multilingual-scala-classification
+  dataset_config: Swedish
+  n_val: 100
+  n_test: 100
+prompt: |
+  Är följande mening grammatiskt korrekt? Svara endast "ja" eller "nej".
+
+  Mening: {text}
