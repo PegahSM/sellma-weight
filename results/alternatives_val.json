@@ -1,0 +1,73 @@
+[
+  {
+    "ja_share": 1.0,
+    "acc": 0.5,
+    "acc_ci": [
+      0.4,
+      0.6
+    ],
+    "auc": 0.54,
+    "auc_ci": [
+      0.423,
+      0.653
+    ],
+    "condition": "prompt=original"
+  },
+  {
+    "ja_share": 0.94,
+    "acc": 0.54,
+    "acc_ci": [
+      0.44,
+      0.64
+    ],
+    "auc": 0.476,
+    "auc_ci": [
+      0.354,
+      0.587
+    ],
+    "condition": "prompt=nej_first"
+  },
+  {
+    "ja_share": 1.0,
+    "acc": 0.5,
+    "acc_ci": [
+      0.4,
+      0.6
+    ],
+    "auc": 0.494,
+    "auc_ci": [
+      0.377,
+      0.609
+    ],
+    "condition": "prompt=neutral"
+  },
+  {
+    "ja_share": 0.53,
+    "acc": 0.51,
+    "acc_ci": [
+      0.41,
+      0.61
+    ],
+    "auc": 0.54,
+    "auc_ci": [
+      0.423,
+      0.653
+    ],
+    "condition": "logit_bias lam=1.0"
+  },
+  {
+    "ja_share": 0.72,
+    "acc": 0.76,
+    "acc_ci": [
+      0.67,
+      0.84
+    ],
+    "auc": 0.936,
+    "auc_ci": [
+      0.885,
+      0.974
+    ],
+    "condition": "finetune_2rows steps=200 lr=0.01",
+    "swedish_loss": 3.1485
+  }
+]
